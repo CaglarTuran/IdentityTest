@@ -1,0 +1,29 @@
+﻿
+@model Register
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2>Kayıt Ol</h2>
+            <form  method="post">
+                <div class="mb-3">
+                    <label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
+                    <input asp-for="UserName" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">Şifre</label>
+                    <input type="password" asp-for="Password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">E-posta Adresi</label>
+                    <input asp-for="Email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="TuttuguTakim" class="form-label">Tutulan Takım</label>
+                    <input asp-for="TuttuguTakim" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+            </form>
+        </div>
+    </div>
+</div>
