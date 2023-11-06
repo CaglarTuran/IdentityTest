@@ -1,0 +1,17 @@
+﻿@using System.Security.Claims;
+@model List<Claim>
+
+@foreach (var claim in Model)
+{
+    <span>GetType</span>  @claim.GetType().ToString();
+    <br />
+    <span>Value</span>  @claim.Value
+    <br />
+    <span>Issuer</span>  @claim.Issuer
+    <br />
+    <span>Subject</span>  @claim.Subject
+    <br />
+
+    <hr />
+
+}

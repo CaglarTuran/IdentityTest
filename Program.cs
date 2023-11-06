@@ -1,19 +1,32 @@
 using IdentityTest;
+using IdentityTest.Code;
 using IdentityTest.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(opt => {
+builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+{
     opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
 });
 
+builder.Services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
+builder.Services.AddIdentity<User, IdentityRole>(opt =>
+{
+    opt.User.RequireUniqueEmail = true;
 
-builder.Services.AddIdentity<User,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+    //password
+    opt.Password.RequiredLength = 3;
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequireLowercase = false;
+    opt.Password.RequireUppercase = false;
+    opt.Password.RequireDigit = false;
+}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); ;
 
 var app = builder.Build();
 
@@ -29,7 +42,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
